@@ -1,5 +1,6 @@
 package validation.movement.special;
 
+import chess.PieceMover;
 import chess.PieceName;
 import chess.Tile;
 import chess.Turn;
@@ -25,10 +26,14 @@ public class PieceSwitchValidator extends AbstractMovementValidator implements M
         Tile to = turn.getTo();
         if(!from.hasPiece() || !to.hasPiece()) return false;
 
-        return from.getPiece().getColor() == to.getPiece().getColor()
-                && from.getPiece().getName() == piece1 && to.getPiece().getName() == piece2
-                || from.getPiece().getName() == piece2 && to.getPiece().getName() == piece1
-                && super.validateRestrictions(turn);
+        if(from.getPiece().getColor() == to.getPiece().getColor()
+                && (from.getPiece().getName() == piece1 && to.getPiece().getName() == piece2
+                || from.getPiece().getName() == piece2 && to.getPiece().getName() == piece1)
+                && super.validateRestrictions(turn)){
+            PieceMover.getInstance().setSwitchTurn(true);
+            return true;
+        }
+        return false;
     }
 }
 

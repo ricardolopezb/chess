@@ -20,9 +20,10 @@ public class PositionTileValidator {
         if(!from.hasPiece()) return false;
         if(from.getPiece().getColor() != turnColor) return false;
         if(to.hasPiece()){
-            if(from.getPiece().getName() != PieceName.KING || from.getPiece().getName() != PieceName.ROOK) {
+            if(from.getPiece().getName() != PieceName.KING && from.getPiece().getName() != PieceName.ROOK) {
                 return to.getPiece().getColor() != turnColor;
             }
+            else return true;
         }
 
         return true;

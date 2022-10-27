@@ -17,6 +17,7 @@ public class Game {
     private GameMode gameMode;
     private Promoter promoter;
     private TurnManager turnManager;
+    private PieceMover pieceMover;
 
     public Game(GameMode gameMode) {
         this.gameMode=gameMode;
@@ -28,6 +29,7 @@ public class Game {
         PromoterFactory pf = new PromoterFactory();
         this.promoter = pf.createPromoter(gameMode);
         this.turnManager = TurnManagerFactory.forGameMode(gameMode);
+        this.pieceMover = PieceMover.getInstance();
 
 
 
@@ -56,10 +58,6 @@ public class Game {
     }
 
     private void movePiece(Turn turn){
-        Tile from = turn.getFrom();
-        Tile to = turn.getTo();
-        board.movePiece(from, to);
-        from.setHasChanged(true);
-        to.setHasChanged(true);
+        pieceMover.movePieces(turn, board);
     }
 }

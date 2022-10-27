@@ -60,10 +60,14 @@ public class ClassicBoardCreator implements BoardCreator{
 
         for (int i = 0; i < whites.size(); i++) {
             generatedTiles.get(i).setPiece(whites.get(i));
+            whites.get(i).setId(generatedTiles.get(i).toString());
+
         }
         int j=0;
         for (int i = generatedTiles.size()-1; i >= generatedTiles.size()-blacks.size() ; i--, j++) {
             generatedTiles.get(i).setPiece(blacks.get(j));
+            blacks.get(j).setId(generatedTiles.get(i).toString());
+
         }
 
     }

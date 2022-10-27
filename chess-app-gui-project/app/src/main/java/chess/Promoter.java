@@ -11,6 +11,7 @@ public class Promoter {
 
     public void checkPromotion(Turn turn){
         Tile to = turn.getTo();
+        if(!to.hasPiece()) return;
         Piece movedPiece = to.getPiece();
         Color movedPieceColor = movedPiece.getColor();
         if(movedPiece.getName() != promoteFrom) return;

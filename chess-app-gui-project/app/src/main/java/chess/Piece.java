@@ -3,13 +3,12 @@ package chess;
 import java.util.Objects;
 
 public class Piece {
-    private static int idCounter = 0;
-    private final String id;
+
+    private  String id;
     private PieceName name;
     private final Color color;
 
     public Piece(PieceName name, Color color) {
-        this.id  = String.valueOf(idCounter++);
         this.name = name;
         this.color = color;
     }
@@ -44,5 +43,9 @@ public class Piece {
 
     public void setName(PieceName promoteTo) {
         this.name = promoteTo;
+    }
+
+    public void setId(String initialPos) {
+        this.id = initialPos;
     }
 }

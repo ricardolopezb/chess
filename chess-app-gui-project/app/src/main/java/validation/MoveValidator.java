@@ -7,6 +7,7 @@ import validation.movement.core.*;
 import validation.movement.special.CaptureMovementValidator;
 import validation.movement.special.MoveCountValidator;
 import validation.movement.special.PieceSwitchValidator;
+import validation.movement.special.UniqueMovementValidator;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -42,7 +43,7 @@ public class MoveValidator {
 
         Set<MovementValidator> verticalLimit2 = new HashSet<>();
         verticalLimit2.add(new LimitMovementValidator(2));
-        verticalLimit2.add( new LimitedRepetionMovementValidator(1));
+        verticalLimit2.add( new UniqueMovementValidator());
         verticalLimit2.add(new UnidirectionalMovementValidator());
 
         pawnMoves.add(new VerticalMovementValidator(verticalLimit));
@@ -54,7 +55,7 @@ public class MoveValidator {
         // Rook movement
         Set<MovementValidator> rookMoves = new HashSet<>();
         Set<MovementValidator> rookRestrictions = new HashSet<>();
-        rookRestrictions.add(new LimitedRepetionMovementValidator(1));
+        rookRestrictions.add(new UniqueMovementValidator());
         rookMoves.add(new VerticalMovementValidator());
         rookMoves.add(new HorizontalMovementValidator());
         rookMoves.add(new PieceSwitchValidator(rookRestrictions, PieceName.ROOK, PieceName.KING));
@@ -89,7 +90,7 @@ public class MoveValidator {
         Set<MovementValidator> kingLimitRestriction = new HashSet<>();
         kingLimitRestriction.add(new LimitMovementValidator(1));
         Set<MovementValidator> kingSwitchRestrictions = new HashSet<>();
-        kingSwitchRestrictions.add(new MoveCountValidator());
+        //kingSwitchRestrictions.add(new MoveCountValidator());
         kingMoves.add(new PieceSwitchValidator(kingSwitchRestrictions, PieceName.ROOK, PieceName.KING));
         kingMoves.add(new VerticalMovementValidator(kingLimitRestriction));
         kingMoves.add(new HorizontalMovementValidator(kingLimitRestriction));
