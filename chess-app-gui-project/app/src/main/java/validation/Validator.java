@@ -1,5 +1,6 @@
 package validation;
 
+import chess.PieceMover;
 import chess.board.Board;
 import chess.GameMode;
 import chess.Turn;
@@ -7,6 +8,8 @@ import utils.exceptions.InvalidMoveException;
 import utils.exceptions.VictoryException;
 import validation.victory.VictoryChecker;
 import validation.victory.VictoryCheckerFactory;
+
+import java.util.ArrayList;
 
 public class Validator {
     private final PositionTileValidator positionTileValidator;
@@ -36,12 +39,15 @@ public class Validator {
                 && moveValidator.validate(turn)
                 && pathValidator.validate(turn, board)
                 && checkValidator.validate(turn, board, turnColor)) return true;
-        else throw new InvalidMoveException("General invalid move");
+        else {
+            PieceMover.getInstance().clearCastling();
+            throw new InvalidMoveException("General invalid move");
+        }
     }
 
     public void validateWin(Board board, boolean whiteTurn) throws InvalidMoveException, VictoryException {
         if(victoryChecker.checkWin(board, whiteTurn)) {
-//            System.out.println("You won!");
+            System.out.println("You won!");
             throw new VictoryException("Chicken winner dinner dinner");
         }
     }

@@ -36,7 +36,7 @@ public class Game {
     }
 
     public boolean isWhiteTurn() {
-        return whiteTurn;
+        return turnManager.getCurrentTurnColor() == Color.WHITE;
     }
 
     public Board getBoard() {

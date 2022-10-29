@@ -1,15 +1,23 @@
 package chess;
 
 import chess.board.Board;
+import utils.CoordinatePair;
 import utils.exceptions.TileNotFoundException;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 public class PieceMover {
 
     private boolean switchTurn;
-    private static PieceMover instance = new PieceMover();
+    private List<CoordinatePair> castlingMoves;
+    private static final PieceMover instance = new PieceMover();
 
     private PieceMover(){
         switchTurn = false;
+        this.castlingMoves = new ArrayList<>();
     }
 
     public static PieceMover getInstance(){
@@ -20,46 +28,44 @@ public class PieceMover {
         Tile from = turn.getFrom();
         Tile to = turn.getTo();
         Color turnColor = from.getPiece().getColor();
-        if(switchTurn) {
+
+        if(!castlingMoves.isEmpty()) {
+            CoordinatePair rookMove = castlingMoves.get(0);
+            CoordinatePair kingMove = castlingMoves.get(1);
+
             try {
-                    if (turnColor == Color.WHITE) {
-                        Tile kingDest = board.getTile('g', 1);
-                        Tile rookDest = board.getTile('f', 1);
-                        if (from.getPiece().getName() == PieceName.KING) {
-                            board.movePiece(from, kingDest);
-                            board.movePiece(to, rookDest);
-                        } else {
-                            board.movePiece(to, kingDest);
-                            board.movePiece(from, rookDest);
-                        }
+                Tile rookFrom = board.getTile(rookMove.from());
+                Tile rookTo = board.getTile(rookMove.to());
+                Tile kingFrom = board.getTile(kingMove.from());
+                Tile kingTo = board.getTile(kingMove.to());
 
-                    } else {
-                        Tile kingDest = board.getTile('g', 8);
-                        Tile rookDest = board.getTile('f', 8);
-                        if (from.getPiece().getName() == PieceName.KING) {
-                            board.movePiece(from, kingDest);
-                            board.movePiece(to, rookDest);
-                        } else {
-                            board.movePiece(to, kingDest);
-                            board.movePiece(from, rookDest);
-                        }
-                    }
-                }
-
-            catch (TileNotFoundException e) {
-                System.out.println("not found");
+                board.movePiece(rookFrom, rookTo);
+                board.movePiece(kingFrom, kingTo);
+            } catch (TileNotFoundException e) {
+                throw new RuntimeException(e);
+            }finally {
+                this.castlingMoves = new ArrayList<>();
             }
 
-        } else {
+        } else{
             board.movePiece(from, to);
+
         }
 
-        setSwitchTurn(false);
+
         from.setHasChanged(true);
         to.setHasChanged(true);
     }
 
     public void setSwitchTurn(boolean switchTurn) {
         this.switchTurn = switchTurn;
+    }
+
+    public void moveCastling(List<CoordinatePair> moves) {
+        this.castlingMoves = moves;
+    }
+
+    public void clearCastling() {
+        this.castlingMoves = new ArrayList<>();
     }
 }

@@ -4,10 +4,7 @@ import chess.*;
 import validation.movement.MovementValidator;
 import validation.movement.PieceMovementValidator;
 import validation.movement.core.*;
-import validation.movement.special.CaptureMovementValidator;
-import validation.movement.special.MoveCountValidator;
-import validation.movement.special.PieceSwitchValidator;
-import validation.movement.special.UniqueMovementValidator;
+import validation.movement.special.*;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -40,11 +37,13 @@ public class MoveValidator {
         Set<MovementValidator> verticalLimit = new HashSet<>();
         verticalLimit.add(new LimitMovementValidator(1));
         verticalLimit.add(new UnidirectionalMovementValidator());
+        verticalLimit.add(new CaptureNotAllowedValidator());
 
         Set<MovementValidator> verticalLimit2 = new HashSet<>();
         verticalLimit2.add(new LimitMovementValidator(2));
         verticalLimit2.add( new UniqueMovementValidator());
         verticalLimit2.add(new UnidirectionalMovementValidator());
+        verticalLimit2.add(new CaptureNotAllowedValidator());
 
         pawnMoves.add(new VerticalMovementValidator(verticalLimit));
         pawnMoves.add(new VerticalMovementValidator(verticalLimit2));
@@ -58,7 +57,6 @@ public class MoveValidator {
         rookRestrictions.add(new UniqueMovementValidator());
         rookMoves.add(new VerticalMovementValidator());
         rookMoves.add(new HorizontalMovementValidator());
-        rookMoves.add(new PieceSwitchValidator(rookRestrictions, PieceName.ROOK, PieceName.KING));
         MovementValidator rookMovement = new PieceMovementValidator(rookMoves);
         pieceMovements.put(PieceName.ROOK, rookMovement);
 
@@ -90,8 +88,8 @@ public class MoveValidator {
         Set<MovementValidator> kingLimitRestriction = new HashSet<>();
         kingLimitRestriction.add(new LimitMovementValidator(1));
         Set<MovementValidator> kingSwitchRestrictions = new HashSet<>();
-        //kingSwitchRestrictions.add(new MoveCountValidator());
-        kingMoves.add(new PieceSwitchValidator(kingSwitchRestrictions, PieceName.ROOK, PieceName.KING));
+        kingSwitchRestrictions.add(new UniqueMovementValidator());
+        kingMoves.add(new CastlingValidator(kingSwitchRestrictions, PieceName.KING, PieceName.ROOK));
         kingMoves.add(new VerticalMovementValidator(kingLimitRestriction));
         kingMoves.add(new HorizontalMovementValidator(kingLimitRestriction));
         kingMoves.add(new DiagonalMovementValidator(kingLimitRestriction));

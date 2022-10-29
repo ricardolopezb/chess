@@ -29,7 +29,9 @@ public class CheckMateChecker implements VictoryChecker {
                 for (Tile targetTile : tiles) {
                     Turn possibleMove = new Turn(targetTile, tile, temp);
                     try {
-                        if(validator.validate(possibleMove, board, whiteTurn)) return false;
+                        if(validator.validate(possibleMove, board, whiteTurn)) {
+                            return false;
+                        }
                     } catch (InvalidMoveException e) {
                         continue;
                     }

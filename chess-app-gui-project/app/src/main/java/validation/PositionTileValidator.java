@@ -13,30 +13,14 @@ public class PositionTileValidator {
         Color turnColor = whiteTurn ? Color.WHITE : Color.BLACK;
         Tile from = turn.getFrom();
         Tile to = turn.getTo();
-        Player player = turn.getPlayer();
 
         if(!board.tileExists(from) && !board.tileExists(to)) return false;
         if(from.equals(to)) return false;
         if(!from.hasPiece()) return false;
         if(from.getPiece().getColor() != turnColor) return false;
-        if(to.hasPiece()){
-            if(from.getPiece().getName() != PieceName.KING && from.getPiece().getName() != PieceName.ROOK) {
-                return to.getPiece().getColor() != turnColor;
-            }
-            else return true;
-        }
+        if(to.hasPiece()) return to.getPiece().getColor() != turnColor;
 
         return true;
     }
-    private boolean isSwitchSituation(Tile from, Tile to){
-        return from.hasPiece() && to.hasPiece()
-                && from.getPiece().getColor() == to.getPiece().getColor()
-                && ((from.getPiece().getName() == PieceName.KING && to.getPiece().getName() == PieceName.ROOK)
-                ||(from.getPiece().getName() == PieceName.ROOK && to.getPiece().getName() == PieceName.KING));
-                //&& emptyBetweenSquares(from, to);
-
-
-    }
-
 
 }
