@@ -24,7 +24,7 @@ class MyEngine() : GameEngine {
         } catch (e: InvalidMoveException){
             return InvalidMove(e.message ?: fail("Name required"))
         } catch (e: VictoryException) {
-            return GameOver(if( game.isWhiteTurn) PlayerColor.WHITE else PlayerColor.BLACK)
+            return GameOver(if( game.isWhiteTurn) PlayerColor.BLACK else PlayerColor.WHITE)
 
         }
     }
