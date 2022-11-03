@@ -41,7 +41,7 @@ public class Validator {
                 && checkValidator.validate(turn, board, turnColor)) return true;
         else {
             PieceMover.getInstance().clearCastling();
-            throw new InvalidMoveException("General invalid move");
+            throw new InvalidMoveException("Invalid move!");
         }
     }
 

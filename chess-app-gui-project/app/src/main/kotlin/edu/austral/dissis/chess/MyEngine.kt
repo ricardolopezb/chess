@@ -10,7 +10,7 @@ import utils.exceptions.InvalidMoveException
 import utils.exceptions.VictoryException
 
 class MyEngine() : GameEngine {
-    private val game: Game = Game(GameMode.CLASSIC)
+    private val game: Game = Game(GameMode.CAPABLANCA)
     private val adapter: Adapter = Adapter()
 
     override fun applyMove(move: Move): MoveResult {
@@ -34,7 +34,10 @@ class MyEngine() : GameEngine {
 
     override fun init(): InitialState {
         val pieces = adapter.convertPieceToChessPiece(game.board.tiles); // gets?
-        return InitialState(BoardSize(8,8),pieces, PlayerColor.WHITE);
+        println(game.board.occupiedTiles.size)
+        val size = game.board.occupiedTiles.size / 4;
+        println(size)
+        return InitialState(BoardSize(size,size),pieces, PlayerColor.WHITE);
     }
 
 

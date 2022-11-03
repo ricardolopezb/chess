@@ -78,4 +78,12 @@ public class Board {
         return null;
 
     }
+
+    public List<Tile> getOccupiedTiles(){
+        List<Tile> tilesWithPiece = new ArrayList<>();
+        for (Tile tile : tiles) {
+            if(tile.hasPiece()) tilesWithPiece.add(tile);
+        }
+        return tilesWithPiece;
+    }
 }

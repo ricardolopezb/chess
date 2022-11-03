@@ -11,16 +11,10 @@ public class VictoryCheckerFactory {
     }
 
     public VictoryChecker getVictoryCheckerForGameMode(GameMode gameMode){
-        switch (gameMode){
-            case CLASSIC -> {return new CheckMateChecker(validator);}
-//            case BERLIN -> {return new CheckMateChecker();}
-//            case CLASSIC -> {return new CheckMateChecker();}
-            default -> {
-                return null;
-            }
-        }
-
-
+        return switch (gameMode){
+            case CLASSIC, CAPABLANCA -> new CheckMateChecker(validator);
+            default -> null;
+        };
     }
 
 }

@@ -1,4 +1,4 @@
-package validation.movement.core;
+package validation.movement.restrictions;
 
 import chess.Color;
 import chess.Tile;

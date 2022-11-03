@@ -1,4 +1,4 @@
-package validation.movement.special;
+package validation.movement.restrictions;
 
 import chess.Piece;
 import chess.Tile;

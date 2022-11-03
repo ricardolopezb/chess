@@ -10,14 +10,14 @@ import validation.Validator;
 import java.util.Stack;
 
 public class Game {
-    private Board board;
+    private final Board board;
     private boolean whiteTurn;
-    private Stack<Turn> turnHistory;
-    private Validator validator;
-    private GameMode gameMode;
-    private Promoter promoter;
-    private TurnManager turnManager;
-    private PieceMover pieceMover;
+    private final Stack<Turn> turnHistory;
+    private final Validator validator;
+    private final GameMode gameMode;
+    private final Promoter promoter;
+    private final TurnManager turnManager;
+    private final PieceMover pieceMover;
 
     public Game(GameMode gameMode) {
         this.gameMode=gameMode;
@@ -30,8 +30,6 @@ public class Game {
         this.promoter = pf.createPromoter(gameMode);
         this.turnManager = TurnManagerFactory.forGameMode(gameMode);
         this.pieceMover = PieceMover.getInstance();
-
-
 
     }
 
@@ -53,7 +51,7 @@ public class Game {
         promoter.checkPromotion(turn);
         turnManager.handleMove();
         this.whiteTurn = turnManager.getCurrentTurnColor() == Color.WHITE;
-        validator.validateWin(board, whiteTurn); // ojo con el cambio del whiteTurn ahi, creo que esta bien igual
+        validator.validateWin(board, whiteTurn);
 
     }
 

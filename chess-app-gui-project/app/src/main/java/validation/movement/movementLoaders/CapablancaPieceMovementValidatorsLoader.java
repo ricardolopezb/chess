@@ -3,22 +3,23 @@ package validation.movement.movementLoaders;
 import chess.PieceName;
 import validation.movement.MovementValidator;
 import validation.movement.PieceMovementValidator;
-import validation.movement.core.*;
+import validation.movement.core.DiagonalMovementValidator;
+import validation.movement.core.HorizontalMovementValidator;
+import validation.movement.core.VariableMovementValidator;
+import validation.movement.core.VerticalMovementValidator;
+import validation.movement.restrictions.CaptureNotAllowedValidator;
 import validation.movement.restrictions.LimitMovementValidator;
 import validation.movement.restrictions.UnidirectionalMovementValidator;
-import validation.movement.special.CaptureMovementValidator;
-import validation.movement.restrictions.CaptureNotAllowedValidator;
-import validation.movement.special.CastlingValidator;
 import validation.movement.restrictions.UniqueMovementValidator;
+import validation.movement.special.CaptureMovementValidator;
+import validation.movement.special.CastlingValidator;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class ClassicPieceMovementValidatorsLoader implements PieceMovementValidatorsLoader {
-
-    // todo hacer mas legible
+public class CapablancaPieceMovementValidatorsLoader implements PieceMovementValidatorsLoader{
     @Override
     public Map<PieceName, MovementValidator> loadMovementValidators() {
         Map<PieceName, MovementValidator> pieceMovements = new HashMap<>();
@@ -64,6 +65,23 @@ public class ClassicPieceMovementValidatorsLoader implements PieceMovementValida
         knightMoves.add(new VariableMovementValidator(2,1,1));
         MovementValidator knightMovement = new PieceMovementValidator(knightMoves);
         pieceMovements.put(PieceName.KNIGHT, knightMovement);
+
+        // Archbishop movement
+        Set<MovementValidator> archbishopMoves = new HashSet<>();
+        archbishopMoves.add(new VariableMovementValidator(1,2,1));
+        archbishopMoves.add(new VariableMovementValidator(2,1,1));
+        archbishopMoves.add(new DiagonalMovementValidator());
+        MovementValidator archbishopMovement = new PieceMovementValidator(archbishopMoves);
+        pieceMovements.put(PieceName.ARCHBISHOP, archbishopMovement);
+
+        // Chancellor movement
+        Set<MovementValidator> chancellorMoves = new HashSet<>();
+        chancellorMoves.add(new VariableMovementValidator(1,2,1));
+        chancellorMoves.add(new VariableMovementValidator(2,1,1));
+        chancellorMoves.add(new VerticalMovementValidator());
+        chancellorMoves.add(new HorizontalMovementValidator());
+        MovementValidator chancellorMovement = new PieceMovementValidator(chancellorMoves);
+        pieceMovements.put(PieceName.CHANCELLOR, chancellorMovement);
 
         // Queen movement
         Set<MovementValidator> queenMoves = new HashSet<>();

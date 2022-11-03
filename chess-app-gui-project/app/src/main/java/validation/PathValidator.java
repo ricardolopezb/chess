@@ -39,7 +39,7 @@ public class PathValidator {
 
     private int hcf(int vectorLetter, int vectorNumber) {
         if (vectorNumber == 0) {
-            return vectorLetter;
+            return Math.abs(vectorLetter);
         }
         return Math.abs(hcf(vectorNumber, vectorLetter % vectorNumber));
     }

@@ -2,10 +2,6 @@ package chess.board;
 
 import chess.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class BoardFactory {
     private BoardCreator boardCreator;
 
@@ -14,8 +10,8 @@ public class BoardFactory {
             case CLASSIC -> {
                 boardCreator = new ClassicBoardCreator();
             }
-            case RETIRED -> {
-                boardCreator = new ClassicBoardCreator();
+            case CAPABLANCA -> {
+                boardCreator = new CapablancaBoardCreator();
             }
             case BERLIN -> {
                 boardCreator = new ClassicBoardCreator();
